@@ -3,6 +3,7 @@ import os, time, sys, Queue, atexit
 import gevent, copy, types
 from gevent import monkey, sleep
 import ujson as json
+import psycopg2
 
 monkey.patch_all()
 
@@ -93,7 +94,7 @@ def startEng(useDllFlag=False):
                 def x():
                     gevent.sleep(1)
                     sheetCntr = SheetCntrTest()
-                    #sheetCntr.inc()
+                    sheetCntr.inc()
                     m["evt"]="EVT_SCSE_10001"
                     m["value"]=sheetCntr.tabs;
                     self.msgsOut.append(json.dumps(m))
@@ -358,8 +359,17 @@ class SheetCntrTest(object):
             # ])
         }        
 
-    def inc(self, amt=1):
-        for tab in self.tabs:
-            for v in tab["values"]:
-                v["value"]+= amt
+    # def inc1(self, amt=1):
+        # for tab in self.tabs:
+            # for v in tab["values"]:
+                # v["value"]+= amt
+	
+    def inc(self):
+        conn_string="host='localhost' dbname='test' user='postgres' password='64456683'"
+        conn=psycopg2.connect(conn_string)
+        cursor=conn.cursor()
+        cursor.execute("select * from sheetcount")
+        table=cursor.fetchall()
+        for row in table:
+            self.tabs[row[0]]=row[1];
 

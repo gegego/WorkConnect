@@ -34,7 +34,7 @@ except:
     raise
 
 
-htmlBase = "D:/work/MyProject/WorkSpace/src/html/inflation-master/web/"
+htmlBase = "D:/work/MyProject/WorkSpace/src/html/"
 # scanFiles(nexPertBase=nexPertBase)
 
 # nexPertTransBase = "C:/CDFE_ROOT/NexPertFF1/nexPertWs/resources"

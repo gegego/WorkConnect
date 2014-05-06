@@ -75,8 +75,8 @@ var getWebSocket = function(url , portOverride, openCb){
             if(portOverride != undefined){
                 root = location.protocol + '//' + location.host;
 				console.log(root);
-                root = root+":"+portOverride;
-				console.log(root);
+                // root = root+":"+portOverride;
+				// console.log(root);
             }else{
                 root = location.protocol + '//' + location.host;
             }

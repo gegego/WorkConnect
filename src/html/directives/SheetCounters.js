@@ -137,7 +137,7 @@ if(window['sheetcountersLoaded'] == undefined){
 			
             scope.$on("EVT_SCSE_10001", function(evt, msg){
                 console.log("SheetCntr", msg.value);
-				for(var xx=0; xx < scope.tabs.length; xx++){
+				for(var xx=0; xx < scope.tabs.length; xx++){					
 					var pagetab = scope.tabs[xx].values;
 					for(var yy=0; yy<pagetab.length; yy++)
 					{

@@ -1,0 +1,60 @@
+<div class='workspace'>
+<style>
+.workspace{
+    width: 50%;
+}
+</style>
+    <div class="AppletCenter75">
+        <div class="panel panel-primary">
+            <div class="panel-heading">{{AppletTitle}}
+			<button class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">Post Mission</button>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+				<div class="modal-content">
+				    <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Post Submission</h4>
+					</div>
+					<div class="modal-body">
+						<table>
+							<tr>
+							Demo Post
+							</tr>
+							<tr>
+							
+							</tr>
+						</table>
+					</div>					
+					<div class="modal-footer">
+						<button class="btn btn-primary" ng-click="submit()" data-dismiss="modal">Submit</button>
+					</div>
+				</div>
+			  </div>
+			</div>
+            <div class="panel-body">
+				<!-- <tabset>
+					<tab ng-repeat="tab in tabs" heading="{{tab.name}}" active="tab.active">
+						<table class="table table-bordered table-hover" >    
+							<thead>
+								<tr>
+									<th ng-repeat="head in header">{{head}}</th>
+								</tr>
+							</thead>       
+							<tbody>
+							<tr ng-repeat="row in tab.values" >
+									<td class="sheetcountersTd1">{{row.name}}</td>
+									<td ng-if="$last">{{row.value}}</td>
+									<td ng-if="!$last">{{row.value}}</td>
+
+							</tr>
+							</tbody>
+						</table>      
+					</tab>
+				</tabset> -->
+			</div>
+		</div>
+	</div>	
+</div>
+
