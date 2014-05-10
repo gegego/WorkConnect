@@ -24,8 +24,8 @@ gevent.monkey.patch_all()
 
 from BackendEng import inboundMsgs, sendMsgToEng, SheetCntrTest, startEng
 from BackendEng import getUseDll
-# from filterNexpert import fixAspPage, scanFiles, getTranalations, addJsFiles
-# from filterNexpert import getJsIncludes
+import time
+from threading import Timer
 
 try:
     startEng()
@@ -33,7 +33,12 @@ except:
     print "Failed to start BackendEng"
     raise
 
+def MoniterJob():
+    while True:
+        print "From print_time", time.time()
+        time.sleep(10)
 
+Timer(10, MoniterJob, ()).start()
 htmlBase = "D:/work/MyProject/WorkSpace/src/html/"
 # scanFiles(nexPertBase=nexPertBase)
 

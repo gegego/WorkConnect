@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app='nexpert-app'>
+<html ng-app='workconnect-app'>
 <head>
 <link rel="icon" 
       type="image/png" 
@@ -20,11 +20,21 @@
     <script src="/lib/ui-bootstrap-tpls-0.10.0.min.js"></script>
 	<script src="/lib/bootstrap.js"></script>
     <script src="/lib/jqueryQr.js"></script>
-  
+    <style>
+    .workconnect{
+        <!-- position:fixed; -->
+        left: 40%;
+    }
+    </style>
 </head>
-<body class="bodyC">
+<body>
+<center>
+<div class="workconnect" >
 <script src="/directives/WorkSpace.js"></script>
+<script src="/directives/SheetCounters.js"></script>
 <WorkSpace>
 </WorkSpace>
+</div>
+</center>
 </body>
 </html>

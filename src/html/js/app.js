@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-var nexpertApp = angular.module('nexpert-app', ['ui.bootstrap']);
+var workconnectApp = angular.module('workconnect-app', ['ui.bootstrap']);
 
 function copyObject(obj) {
     var newObj = {};
@@ -23,7 +23,7 @@ String.prototype.unescapeHtml = function () {
     return result;
 }
 
-nexpertApp.filter('trl', function($rootScope, $sce) {
+workconnectApp.filter('trl', function($rootScope, $sce) {
       return function(input) {
         console.log($rootScope.Locale);
         console.log(input);
@@ -41,7 +41,7 @@ nexpertApp.filter('trl', function($rootScope, $sce) {
       };
 });
 
-nexpertApp.factory('udpMsgs', function ($rootScope, $timeout, $http) {
+workconnectApp.factory('udpMsgs', function ($rootScope, $timeout, $http) {
     wsO.regAll(function(msg){
         //console.log(msg);
         $rootScope.$broadcast(msg.evt, msg);

@@ -58,14 +58,18 @@ def startEng(useDllFlag=False):
             def __init__(self):
                 self.msgsIn=[]
                 self.msgsOut=[]
+                self.conn_string="host='localhost' dbname='WorkConnect' user='postgres' password='64456683'"
+                self.conn=psycopg2.connect(self.conn_string)
+                self.cursor=self.conn.cursor()
+                self.serviceSessionStarted=False
+
                 self.handlers=dict(
                     startServiceSession= self.startServiceSession,
                     stopServiceSession=  self.stopServiceSession,
                     getSheetCount=  self.getSheetCount,
+                    updateWorkSpace= self.updateWorkSpace,
+                    postWork= self.postWork,
                 )
-
-                self.serviceSessionStarted=False
-
 
             def startServiceSession(self, m):
                 def x():
@@ -80,7 +84,37 @@ def startEng(useDllFlag=False):
                     self.msgsOut.append(json.dumps(m))
                 gevent.spawn(x)
                 #print "startServiceSession"
-
+                
+            def updateWorkSpace(self, m):
+                def x():
+                    gevent.sleep(1)
+                    print "1111111111"
+                    self.cursor.execute("select * from \"Works\" ORDER BY \"ID\" DESC")
+                    table=self.cursor.fetchall()
+                    print table
+                    m["evt"]="worksUpdate"
+                    m["worksdata"]=table;
+                    self.msgsOut.append(json.dumps(m))
+                gevent.spawn(x)
+            
+            def postWork(self, m):
+                def x():
+                    # gevent.sleep(1)
+                    # print "Post work"
+                    # print m
+                    query =  "INSERT INTO \"Works\" (\"JobName\", \"Description\", \"UserName\") VALUES (%s, %s, %s);"
+                    job=m["job"]
+                    desc=m["desc"]
+                    user=m["user"]
+                    data = (job, desc, user)
+                    self.cursor.execute(query, data)
+                    self.conn.commit()
+                    # table=self.cursor.fetchall()
+                    # m["evt"]="worksUpdate"
+                    # m["worksdata"]=table;
+                    # self.msgsOut.append(json.dumps(m))
+                gevent.spawn(x)            
+				
             def stopServiceSession(self, m):
                 def x():
                     gevent.sleep(1)
@@ -182,7 +216,7 @@ def sendMsgToEng(msg):
 
 
 class SheetCntrTest(object):
-    def __init__(self):
+    def __init__(self):		
         self.tabs={
 "Total Surfaces Detected":155422,
 "Equivalent A4":1,

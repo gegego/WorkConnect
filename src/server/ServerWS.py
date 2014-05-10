@@ -20,27 +20,27 @@ from bottle import run, route, debug
 import ujson as json
 
 def monitor():
-   import runIt
+   import RunInst
    cnt=0
    mtime = os.path.getmtime("RunInst.py")
-   task = gevent.spawn(runIt.run, dict(cnt=cnt) )
+   task = gevent.spawn(RunInst.run, dict(cnt=cnt) )
    while 1:
        gevent.sleep(1)
        mtime1 = os.path.getmtime("RunInst.py")
        if mtime == mtime1:
            continue
        mtime = mtime1
-       runIt.stop()
+       RunInst.stop()
        gevent.sleep(1)
        print "Kill"
        task.kill()
        try:
-           reload(runIt)
+           reload(RunInst)
        except:
            traceback.print_exc()
            continue
        cnt+=1
-       task = gevent.spawn(runIt.run,  dict(cnt=cnt))
+       task = gevent.spawn(RunInst.run,  dict(cnt=cnt))
 
 gevent.spawn(monitor)
 while 1:

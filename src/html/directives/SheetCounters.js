@@ -20,7 +20,7 @@
 
 */
 if(window['sheetcountersLoaded'] == undefined){
-    nexpertApp.directive('sheetcounters', function($rootScope, udpMsgs, $http, $timeout){
+    workconnectApp.directive('sheetcounters', function($rootScope, udpMsgs, $http, $timeout){
         var header = ["Sheet Type","Total"];
         var tabs=[
             {name:"Total",

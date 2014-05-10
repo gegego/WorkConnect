@@ -1,13 +1,25 @@
 <div class='workspace'>
 <style>
 .workspace{
-    width: 50%;
+    width: 60%;
+    text-align: left;
 }
 </style>
     <div class="AppletCenter75">
         <div class="panel panel-primary">
-            <div class="panel-heading">{{AppletTitle}}
-			<button class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">Post Mission</button>
+            <div class="panel-heading" style="text-align: left;">
+            <table>
+            <tr>
+                <td width="90%">{{AppletTitle}}</td>
+                <td align="center">
+                <button class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg" ng-click="clearData()">Post Mission</button>
+                </td>
+                <!-- <td align="center">
+                
+                <button class="btn btn-success" ng-click="refresh()">Refresh</button>
+                </td> -->
+            </tr> 
+            </table>            
 			</div>
 			<!-- Modal -->
 			<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -20,11 +32,23 @@
 					<div class="modal-body">
 						<table>
 							<tr>
-							Demo Post
+                            <div class="form-group">
+                                <label for="jobinput">Job Name</label>
+                                <input class="form-control" id="jobinput" ng-model="jobName" placeholder="Enter Job Name">
+                            </div>
 							</tr>
-							<tr>
-							
+                            <div class="form-group">
+                                <label for="userinput">User Name</label>
+                                <input class="form-control" id="userinput" ng-model="userName" placeholder="Enter User Name">
+                            </div>
+							<tr>							
 							</tr>
+                            <tr>
+                            <div class="form-group">
+                                <label for="descinput">Description</label>
+                                <textarea class="form-control" rows="4" ng-model="descriptionContent" id="descinput"></textarea>
+                            </div>
+                            </tr>
 						</table>
 					</div>					
 					<div class="modal-footer">
@@ -34,25 +58,24 @@
 			  </div>
 			</div>
             <div class="panel-body">
-				<!-- <tabset>
-					<tab ng-repeat="tab in tabs" heading="{{tab.name}}" active="tab.active">
-						<table class="table table-bordered table-hover" >    
-							<thead>
-								<tr>
-									<th ng-repeat="head in header">{{head}}</th>
-								</tr>
-							</thead>       
-							<tbody>
-							<tr ng-repeat="row in tab.values" >
-									<td class="sheetcountersTd1">{{row.name}}</td>
-									<td ng-if="$last">{{row.value}}</td>
-									<td ng-if="!$last">{{row.value}}</td>
-
-							</tr>
-							</tbody>
-						</table>      
-					</tab>
-				</tabset> -->
+                <table  class="table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th>JOB</th>
+                            <th>DESCRIPTION</th>
+                            <th>USER</th>
+                            <th>TIME</th>
+                        </tr>
+					</thead>    
+                    <tbody>                    
+                        <tr ng-repeat="work in works" >
+                            <td>{{work[0]}}</td>
+                            <td>{{work[1]}}</td>
+                            <td>{{work[2]}}</td>
+                            <td>{{work[4]}}</td>
+                        </tr>
+                    </tbody>
+                </table>      
 			</div>
 		</div>
 	</div>	
