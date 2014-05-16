@@ -33,12 +33,8 @@ except:
     print "Failed to start BackendEng"
     raise
 
-def MoniterJob():
-    while True:
-        print "From print_time", time.time()
-        time.sleep(10)
 
-Timer(10, MoniterJob, ()).start()
+
 htmlBase = "D:/work/MyProject/WorkSpace/src/html/"
 # scanFiles(nexPertBase=nexPertBase)
 

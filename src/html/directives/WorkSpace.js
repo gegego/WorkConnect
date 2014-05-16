@@ -21,6 +21,11 @@ if(window['workspaceLoaded'] == undefined){
             scope.refresh();	
             scope.$on("worksUpdate", function(evt, msg){
                 console.log("works", msg.worksdata);
+                console.log("timing", msg.timingKill);
+                for(var x=0;x<msg.worksdata.length;x++)
+                {
+                    msg.worksdata[x][4]=msg.timingKill[x][msg.worksdata[x][3]];
+                }                
                 scope.works = msg.worksdata;
                 scope.$digest();
             });

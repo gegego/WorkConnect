@@ -4,12 +4,28 @@ import gevent, copy, types
 from gevent import monkey, sleep
 import ujson as json
 import psycopg2
+import Job
+from Job import Job
+import time
+from threading import Timer
 
 monkey.patch_all()
 
 eng = None
 readTaskTh=None
 useDll=False
+
+def MoniterJob():
+    while True:
+        #print eng.jb.Jobs
+        m={}
+        eng.jb.calculateTimingKill()
+        eng.updateWorkSpace(m)
+        #print eng.jb.TimingKill
+        #print "From print_time", time.time()
+        time.sleep(5)
+
+Timer(5, MoniterJob, ()).start()
 
 def getUseDll():
     return useDll
@@ -58,9 +74,7 @@ def startEng(useDllFlag=False):
             def __init__(self):
                 self.msgsIn=[]
                 self.msgsOut=[]
-                self.conn_string="host='localhost' dbname='WorkConnect' user='postgres' password='64456683'"
-                self.conn=psycopg2.connect(self.conn_string)
-                self.cursor=self.conn.cursor()
+                self.jb=Job()
                 self.serviceSessionStarted=False
 
                 self.handlers=dict(
@@ -88,27 +102,29 @@ def startEng(useDllFlag=False):
             def updateWorkSpace(self, m):
                 def x():
                     gevent.sleep(1)
-                    print "1111111111"
-                    self.cursor.execute("select * from \"Works\" ORDER BY \"ID\" DESC")
-                    table=self.cursor.fetchall()
-                    print table
+                    self.jb.updateJobs()
+                    self.jb.calculateTimingKill()
                     m["evt"]="worksUpdate"
-                    m["worksdata"]=table;
+                    m["worksdata"]=self.jb.Jobs;
+                    m["timingKill"]=self.jb.TimingKill;
                     self.msgsOut.append(json.dumps(m))
                 gevent.spawn(x)
             
             def postWork(self, m):
                 def x():
-                    # gevent.sleep(1)
+                    gevent.sleep(1)
+                    m["timing"]=time.time() + 1000
+                    print m
+                    self.jb.insertJob(m)
                     # print "Post work"
                     # print m
-                    query =  "INSERT INTO \"Works\" (\"JobName\", \"Description\", \"UserName\") VALUES (%s, %s, %s);"
-                    job=m["job"]
-                    desc=m["desc"]
-                    user=m["user"]
-                    data = (job, desc, user)
-                    self.cursor.execute(query, data)
-                    self.conn.commit()
+                    # query =  "INSERT INTO \"Works\" (\"JobName\", \"Description\", \"UserName\") VALUES (%s, %s, %s);"
+                    # job=m["job"]
+                    # desc=m["desc"]
+                    # user=m["user"]
+                    # data = (job, desc, user)
+                    # self.cursor.execute(query, data)
+                    # self.conn.commit()
                     # table=self.cursor.fetchall()
                     # m["evt"]="worksUpdate"
                     # m["worksdata"]=table;
